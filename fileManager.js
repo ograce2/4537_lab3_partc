@@ -20,8 +20,7 @@ export class FileManager{
         fs.readFile(filename, function(err, data){
             if (err){
                 res.writeHead(404, {"Content-Type": "text/html"});
-                //return res.end(FileManager.readError.replace("%1", filename.slice(FileManager.tmpPath.length)));
-                return res.end(err.message);
+                return res.end(FileManager.readError.replace("%1", filename.slice(FileManager.tmpPath.length)));
             }
             res.writeHead(200, {"Content-Type": "text/html"});
             res.write(data);
