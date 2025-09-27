@@ -1,7 +1,7 @@
 import fs from "fs";
 
 export class FileManager{
-    static defaultFile = "./file.txt";
+    static defaultFile = "file.txt";
 
     static readPath = "readFile";
 
@@ -13,11 +13,14 @@ export class FileManager{
 
     static readError = "404 File %1 Not Found!"
 
+    static tmpPath = "./tmp/";
+
     static readFile(filename, res, req){
+        filename = FileManager.tmpPath + filename;
         fs.readFile(filename, function(err, data){
             if (err){
                 res.writeHead(404, {"Content-Type": "text/html"});
-                return res.end(FileManager.readError.replace("%1", filename.slice(2)));
+                return res.end(FileManager.readError.replace("%1", filename.slice(FileManager.tmpPath.length)));
             }
             res.writeHead(200, {"Content-Type": "text/html"});
             res.write(data);
@@ -26,7 +29,7 @@ export class FileManager{
     }
 
     static writeFile(data, res, req){
-        fs.appendFile(FileManager.defaultFile, data, function(err){
+        fs.appendFile(FileManager.tmpPath + FileManager.defaultFile, data, function(err){
             if (err){
                 res.writeHead(404, {"Content-Type": "text/html"});
                 return res.end(FileManager.writeError);

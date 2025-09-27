@@ -17,7 +17,7 @@ class Server{
         const pathVals = q.path.split("/");
 
         if (pathVals.length > 2 && pathVals.at(-2) === fm.FileManager.readPath){
-            const filename = pathVals.length > 2 ? "./" + pathVals.at(-1) : "./ ";
+            const filename = pathVals.length > 2 ? pathVals.at(-1) : "";
             fm.FileManager.readFile(filename, res, req);
         } else if(pathVals.length > 2 && pathVals.at(-2) === fm.FileManager.wrtiePath){
             const data = q.query["text"];
