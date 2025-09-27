@@ -13,14 +13,15 @@ export class FileManager{
 
     static readError = "404 File %1 Not Found!"
 
-    static tmpPath = "./tmp/";
+    static tmpPath = "/tmp/";
 
     static readFile(filename, res, req){
         filename = FileManager.tmpPath + filename;
         fs.readFile(filename, function(err, data){
             if (err){
                 res.writeHead(404, {"Content-Type": "text/html"});
-                return res.end(FileManager.readError.replace("%1", filename.slice(FileManager.tmpPath.length)));
+                //return res.end(FileManager.readError.replace("%1", filename.slice(FileManager.tmpPath.length)));
+                return res.end(err.message);
             }
             res.writeHead(200, {"Content-Type": "text/html"});
             res.write(data);
